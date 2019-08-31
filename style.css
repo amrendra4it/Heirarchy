@@ -1,0 +1,82 @@
+
+
+#svgContainer { 
+	z-index: -10;
+	position:absolute;
+	opacity: 0.5;
+}
+
+
+
+#outer{
+	margin:0 auto;
+	width: 80%;
+}
+
+#teal{
+ 	width: 6em;
+ 	height: 6em;
+ 	background-color:teal;
+ 	margin-left: 10%;
+}
+#orange{
+	height: 4em;
+	width: 35%;
+	padding: 2em 8em;
+	margin-left: 8em;
+	margin-top: 6em;
+	background-color: orange; 
+}
+
+#red{
+	width:6em;
+	height: 4em;
+	margin-left: 30%; 
+	padding:4em 3em;
+	background-color:red;
+}
+#aqua{
+	width: 5em;
+	height: 5em;
+	margin-left:15%; 
+	background-color:aqua;
+}
+#purple{
+	width: 15em;
+	height: 5em;
+	background-color:purple;
+}
+#green{
+	width: 5em;
+	height: 7em;
+	margin-top: 2em;
+	margin-left: 50%;
+	background-color: green;
+}
+
+.treeblock :hover{animation: 3s linear 0s slide 1;}
+
+svg rect:hover {
+	stroke:red;
+	stroke-width: 6px;
+}
+
+svg path:hover {
+	stroke:red;
+	stroke-width: 4px;
+	z-index: 9999;
+}
+
+.hoverDiv{
+	/* background-color: #212529;
+	color:rgba(255,255,255,.75); */
+	position: absolute;
+	border-radius: 25px;
+	padding: 10px;
+}
+.hoverDiv .table{
+/* color:rgba(255,255,255,.75); */
+}
+svg rect{
+	cursor: pointer;
+}

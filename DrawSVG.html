@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html ng-app="phonecatApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect divs with SVG</title>
+  <link rel="stylesheet" type="text/css" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script src="jquery-3.4.1.min.js"></script>
+  <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script> -->
+
+  <script src="angular.min.js"></script>
+</head>
+
+<body>
+
+  <div ng-controller="PhoneListController">
+    <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
+      <a class="navbar-brand" href="#">Building Hierarchy</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#" ng-click="reDraw()">ReDraw <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="zoomIn()">Zoom-In + </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="zoomOut()"> Zoom-Out - </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="squareBuilding()">Square Block</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="circleBuilding()">Circle Block</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="setGradient()">Shade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="setColor()">Color</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Block Size
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#" ng-click="setblockSize(1)">1x</a>
+              <a class="dropdown-item" href="#" ng-click="setblockSize(2)">2x</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" ng-click="setblockSize(3)">3x</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Line Curve
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#" ng-click="setLineCurve(0)">No Curve</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" ng-click="setLineCurve(25)">Small</a>
+              <a class="dropdown-item" href="#" ng-click="setLineCurve(50)">Big</a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Box Shadow
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#" ng-click="setBoxShadow(true,15)">Thin Shadow</a>
+              <a class="dropdown-item" href="#" ng-click="setBoxShadow(false,0)">No Shadow</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" ng-click="setBoxShadow(true,30)">Thick Shadow</a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                font
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#" ng-click="setfont( '8px Arial')">8</a>
+                <a class="dropdown-item" href="#" ng-click="setfont('10px Arial')">10</a>
+                <a class="dropdown-item" href="#" ng-click="setfont('12px Arial')">12</a>
+                <a class="dropdown-item" href="#" ng-click="setfont('14px Arial')">14</a>
+                <a class="dropdown-item" href="#" ng-click="setfont('16px Arial')">16</a>
+                <a class="dropdown-item" href="#" ng-click="setfont('20px Arial')">20</a>
+                <a class="dropdown-item" href="#" ng-click="setfont('24px Arial')">24</a>
+
+              </div>
+            </li>
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                AutoSize Container
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#" ng-click="setAutoSize( true)">Yes</a>
+                <a class="dropdown-item" href="#" ng-click="setAutoSize( false)">No</a>
+
+              </div>
+            </li> -->
+        </ul>
+
+      </div>
+    </nav>
+    <div style="display:none;">
+      <textarea>
+
+       </textarea>
+      <button ng-click="setData()">SetData</button>
+    </div>
+
+    <div style="display: none;">
+      <button ng-click="reDraw()"> ReDraw </button>
+      <button ng-click="zoomIn()"> Zoom-in + </button>
+      <button ng-click="zoomOut()"> Zoom-out - </button>
+      <button ng-click="squareBuilding()"> Square Building </button>
+      <button ng-click="circleBuilding()"> CircleBuilding </button>
+      <button ng-click="setGradient()"> Shade </button>
+      <button ng-click="setColor()"> Color </button>
+
+
+    </div>
+    <!-- <div id="svgContainer" style="margin: 50px 50px;" >
+      <svg id="svg1" width={{totalWidth}} height={{totalHeight}}>
+        <defs>
+          <path id={{rect.pathId}} ng-repeat="rect in rectangle" d={{rect.pathd}}></path>
+        </defs>
+        <rect ng-repeat="rect in rectangle" x={{rect.x}} y={{rect.y}} margin={{rect.margin}} width="100" height="100"
+          stroke="black" fill="transparent" stroke-width="5" />
+        <text path="#" ng-repeat="rect in rectangle" x={{rect.x}} y={{rect.textY}}
+          margin={{rect.margin}} font-family="Calibri" font-size="20" fill="white">
+        <textPath xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href='#path0-0' >
+          {{rect.text}}
+        </textPath>
+        </text>
+      </svg>
+    </div> -->
+    <div class="">
+      <tree-design datasource="dataToDraw" treesettings="treeSettings" width="1000" height="1000" rendertype="renderType" ></tree-design>
+      <!-- <canvas id="canvasHeirarchy" width="1000" height="1000" tree-design /> -->
+    </div>
+  </div>
+
+
+  <!-- <script src="DrawBuildingHeirarchy.js"></script> -->
+  <script src="DrawImage.js"></script>
+  <script src="treeDirective.js"></script>
+  <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

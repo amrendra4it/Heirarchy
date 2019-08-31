@@ -1,0 +1,61 @@
+<div id="svgContainer" class="col-md-12" style="overflow: scroll" ng-if="renderType ==='svg'">
+
+  <svg id="svg1" ng-attr-viewBox={{svgAttribute.viewBox}} width={{svgAttribute.maxXAxis}}
+    height={{svgAttribute.maxYAxis}} preserveAspectRatio="xMinYMin" ng-attr-transform={{GetZoomLevl()}}>
+    {{svgAttribute.viewBox}}
+    <defs>
+      <path id={{rect.pathId}} ng-repeat="rect in rectangle" ng-attr-d={{rect.pathd}}></path>
+
+    </defs>
+    <g ng-repeat="rect in rectangle">
+      <path id={{rect.parentArrowId}} ng-attr-d={{rect.parentArrowd}} fill="transparent" stroke="#236B8E"
+        ng-click="handleArrowClick(rect,rect.parent)"
+        style=" fill-opacity: 1;stroke-width:4; fill-rule: nonzero; stroke-opacity:0.9;"></path>
+
+      <rect ng-if="! (settings.shapeType=='circle')" x={{rect.x}} y={{rect.y}} margin={{rect.margin}} width={{settings.blockSize}} height={{settings.blockSize}} stroke="black" fill="transparent"
+        stroke-width="5" id={{rect.blockId}} ng-click="handleClick(rect)" rx="15" ng-mouseleave="hoverOut(rect)"
+        ng-mouseover="hoverIn(rect,$event)" style="fill:#00acac;stroke-width:2;fill-opacity:1;stroke-opacity:0.9"
+        class="treeblock" />
+
+      <circle  ng-if="settings.shapeType=='circle'" cx={{rect.centerX}} cy={{rect.centerY}} r={{rect.radius}} margin={{rect.margin}}  stroke="black" fill="transparent"
+        stroke-width="5" id={{rect.blockId}} ng-click="handleClick(rect)" rx="15" ng-mouseleave="hoverOut(rect)"
+        ng-mouseover="hoverIn(rect,$event)" style="fill:#E9967A;stroke-width:2;fill-opacity:1;stroke-opacity:0.9"
+        class="treeblock" />
+      <text path="#" x="0" y="0" margin={{rect.margin}} font-family="Calibri" font-size="20" fill="white"
+        id={{rect.textId}}>
+        <textPath xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href={{rect.textRefPathId}}>
+          {{rect.text}}
+        </textPath>
+      </text>
+    </g>
+
+  </svg>
+</div>
+
+<canvas width='1000' height='1000' ng-if="renderType!=='svg'" />
+
+<div id="blockTootip" style="display: none" class="hoverDiv bg-dark text-light">
+  <span class="small">
+    Welcome to {{selectedBuilding}}
+  </span>
+  <table class="table text-light  table-sm small" ng-if="toolTipHoverDetails">
+    <thead>
+      <td>
+        Elements
+      </td>
+      <td>
+        Value
+      </td>
+    </thead>
+    <tbody ng-repeat="(key, value)  in toolTipHoverDetails">
+      <tr>
+        <td>
+          {{key}}
+        </td>
+        <td>
+          {{value}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
